@@ -1,9 +1,5 @@
 /** @param {NS} ns */
 export async function main(ns) {
-	if ((!ns.fileExists('launchOptions.txt')) || (ns.args[0] == 'config')) {
-		let autoUpdate = await ns.prompt('Would you like to check for updates on each run?');
-		await ns.write('launchOptions.txt', `{"autoUpdate":${autoUpdate}}`, 'w');
-	}
 	if (ns.args[0] !== 'skip') {
 		let config = JSON.parse(ns.read('launchOptions.txt'));
 		if (config.autoUpdate == true) {

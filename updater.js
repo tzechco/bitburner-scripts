@@ -3,7 +3,7 @@ export async function main(ns) {
     if(ns.args[0] == 'ow') {
         await ns.mv('home', 'updater.js', '/temp/updater.js');
         await ns.rm('/temp/updater.js');
-        ns.tprintf('Updates Complete!');
+        return ns.tprintf('Updates Complete!');
 
     } else if (ns.args[0]) {
         await ns.wget(`https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/${ns.args[0]}`, `/temp/${ns.args[0]}`);

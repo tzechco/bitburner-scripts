@@ -1,19 +1,17 @@
 /** @param {NS} ns */
 export async function main(ns) {
     if (ns.args[0]) {
-        await ns.wget(`https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/${ns.args[0]}`, `/temp/${ns.args[0]}`);
-        await ns.mv('home', ns.args[0], `/temp/${ns.args[0]}`);
+        await ns.wget(`https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/${ns.args[0]}`, ns.args[0]);
         return ns.exec(ns.args[0], 'home', 1, 'skip');
     }
-    await ns.wget('https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/temp/updater.js', '/temp/updater.js');
-    await ns.exec('/temp/updater.js', 'home');
-    while (ns.getRunningScript('/temp/updater.js')) {
-        await ns.sleep(1000);
+    let files = ['autohack.js', 'updater.js', '/runners/hack.js', '/runners/grow.js', '/runners/weaken.js'];
+    for (let i = 0; i < files.length; ++i) {
+        ns.tprint(`Downloading ${files[i]}`);
+        await ns.wget(`https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/${files[i]}`, files[i]);
     }
-    ns.rm('/temp/updater.js');
     if (!ns.fileExists('launchOptions.txt')) {
-		let autoUpdate = await ns.prompt('Would you like to check for updates on each run?');
-		await ns.write('launchOptions.txt', `{"autoUpdate":${autoUpdate}}`, 'w');
-	}
-    ns.tprintf('Update Complete!')
+        let autoUpdate = await ns.prompt('Would you like enable auto updates?');
+        await ns.write('launchOptions.txt', `{"autoUpdate":${autoUpdate}}`, 'w');
+    }
+    ns.tprint('Update Complete!');
 }

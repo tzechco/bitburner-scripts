@@ -1,23 +1,20 @@
 /** @param {NS} ns */
 export async function main(ns) {
+	if ((!ns.fileExists('launchOptions.txt')) || (ns.args[0] == 'config')) {
+		let autoUpdate = await ns.prompt('Would you like to check for updates on each run?');
+		await ns.write('launchOptions.txt', `{"autoUpdate":${autoUpdate}}`, 'w');
+	}
+	if (ns.args[0] !== 'skip') {
+		let config = JSON.parse(ns.read('launchOptions.txt'));
+		if (config.autoUpdate == true) {
+			return ns.exec('updater.js', 'home', 1, 'launch')
+		}
+	}
 	let scanned = [];
 	let bestHackMoney = 0;
 	let bestHack;
 	let serverTop = ns.scan("home");
 	let serverBottom = ns.scan("home");
-	if ((!ns.fileExists('launchOptions.txt')) || (ns.args[0] == 'config')) {
-		let autoUpdate = await ns.prompt('Would you like to check for updates on each run?');
-		await ns.write('launchOptions.txt', `{"autoUpdate":${autoUpdate}}`, 'w');
-	} else {
-		let config = JSON.parse(ns.read('launchOptions.txt'));
-		if (config.autoUpdate == true) {
-			await ns.wget('https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/launch.js', '/temp/launch.js')
-			if(ns.read('/temp/launch.js') !== ns.read('launch.js')) {
-				await ns.mv('home', '/temp/launch.js', 'launch.js')
-				return;
-			}
-		}
-	}
 	while (serverTop.length > 0) {
 		scanned = ns.scan(serverTop[0]);
 		scanned.splice("home", 1);

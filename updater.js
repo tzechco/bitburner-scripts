@@ -11,4 +11,9 @@ export async function main(ns) {
         await ns.sleep(1000);
     }
     ns.rm('/temp/updater.js');
+    if (!ns.fileExists('launchOptions.txt')) {
+		let autoUpdate = await ns.prompt('Would you like to check for updates on each run?');
+		await ns.write('launchOptions.txt', `{"autoUpdate":${autoUpdate}}`, 'w');
+	}
+    ns.tprintf('Update Complete!')
 }

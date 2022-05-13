@@ -1,6 +1,6 @@
 /** @param {NS} ns */
 export async function main(ns) {
-    if(args[0] == 'ow') {
+    if(ns.args[0] == 'ow') {
         await ns.mv('home', 'updater.js', '/temp/updater.js');
         await ns.rm('/temp/updater.js');
         ns.tprintf('Updates Complete!');

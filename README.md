@@ -1,3 +1,8 @@
 # bitburner-scripts
-bitburner scripts but i cant code very well
-also not finished so like dont use this lol
+Scripts I made for [Bitburner](https://github.com/danielyxie/bitburner)
+
+To download simply run 
+```
+wget https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/updater.js
+run updater.js
+```

@@ -5,5 +5,4 @@ export async function main(ns) {
         ns.tprintf(`Downloading ${files[i]}`)
         await ns.wget(`https://raw.githubusercontent.com/tzechco/bitburner-scripts/main${files[i]}`, files[i]);
     }
-    ns.tprintf('Update Complete!')
 }

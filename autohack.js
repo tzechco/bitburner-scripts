@@ -7,7 +7,7 @@ export async function main(ns) {
 	if (ns.args[0] !== 'skip') {
 		let config = JSON.parse(ns.read('launchOptions.txt'));
 		if (config.autoUpdate == true) {
-			return ns.exec('updater.js', 'home', 1, 'launch')
+			return ns.exec('updater.js', 'home', 1, 'autohack.js')
 		}
 	}
 	let scanned = [];

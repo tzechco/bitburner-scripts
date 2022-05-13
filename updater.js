@@ -8,7 +8,7 @@ export async function main(ns) {
         }
     }
     let files = ['autohack.js', 'updater.js', 'runners/hack.js', 'runners/grow.js', 'runners/weaken.js']
-    files.forEach((file) => {
-        await ns.wget(`https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/${file}`, file)
-    })
+    for (let index = 0; index < files.length; ++index) {
+        await ns.wget(`https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/${files[index]}`, files[index])
+    }
 }

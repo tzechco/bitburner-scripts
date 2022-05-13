@@ -1,10 +1,10 @@
 /** @param {NS} ns */
 export async function main(ns) {
-    if (ns.args[0] == 'launch') {
-        await ns.wget('https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/autohack.js', '/temp/autohack.js')
-        if (ns.read('/temp/autohack.js') !== ns.read('autohack.js')) {
-            await ns.mv('home', 'autohack.js', '/temp/autohack.js')
-            return ns.exec('autohack.js', 'home', 1, 'skip');
+    if (ns.args[0]) {
+        await ns.wget(`https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/${ns.args[0]}`, `/temp/${ns.args[0]}`)
+        if (ns.read(ns.args[0]) !== ns.read(`/temp/${ns.args[0]}`)) {
+            await ns.mv('home', ns.args[0], `/temp/${ns.args[0]}`)
+            return ns.exec(ns.args[0], 'home', 1, 'skip');
         }
     }
     let files = ['autohack.js', 'updater.js', 'runners/hack.js', 'runners/grow.js', 'runners/weaken.js']

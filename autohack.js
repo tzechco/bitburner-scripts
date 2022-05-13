@@ -23,7 +23,7 @@ export async function main(ns) {
 		serverTop = [...serverTop, ...scanned];
 	}
 	serverBottom = [...new Set(serverBottom)];
-	async function doThing(file) {
+	async function execute(file) {
 		if (Math.floor((ns.getServerMaxRam('home') - ns.getServerUsedRam('home')) / ns.getScriptRam(`/runners/${file}`)) > 0) {
 			ns.exec(`/runners/${file}`, 'home', Math.floor((ns.getServerMaxRam('home') - ns.getServerUsedRam('home')) / ns.getScriptRam(`/runners/${file}`)), bestHack);
 		}
@@ -39,7 +39,7 @@ export async function main(ns) {
 			await ns.sleep(1000);
 		}
 	}
-	async function getBestHack() {
+	async function getBestServer() {
 		for (let index = 0; index < serverBottom.length; ++index) {
 			if ((ns.hasRootAccess(serverBottom[index]) == true) && (ns.getServerRequiredHackingLevel(serverBottom[index]) <= ns.getHackingLevel())) {
 				if (ns.getServerMoneyAvailable(serverBottom[index]) > bestHackMoney) {
@@ -58,32 +58,32 @@ export async function main(ns) {
 				await ns.sleep(1000);
 			}
 			await ns.sleep(1000);
-			await getBestHack();
+			await getBestServer();
 		} else {
-			await hackTime();
+			await prepare();
 		}
 	}
-	async function hackTime() {
+	async function prepare() {
 		if (ns.getServerMoneyAvailable(bestHack) !== ns.getServerMaxMoney(bestHack)) {
-			await doThing('grow');
+			await execute('grow.js');
 			await ns.sleep(1000);
-			await hackTime();
+			await prepare();
 		} else if (ns.getServerMinSecurityLevel(bestHack) !== ns.getServerSecurityLevel(bestHack)) {
-			await doThing('weaken');
+			await execute('weaken.js');
 			await ns.sleep(1000);
-			await hackTime();
+			await prepare();
 		} else {
 			await hack();
 		}
 	}
 	async function hack() {
 		if (ns.getServerMoneyAvailable(bestHack) > 0) {
-			await doThing('hack');
+			await execute('hack.js');
 			await ns.sleep(1000);
 			await hack();
 		} else {
-			await getBestHack();
+			await getBestServer();
 		}
 	}
-	await getBestHack();
+	await getBestServer();
 }

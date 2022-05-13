@@ -27,12 +27,12 @@ export async function main(ns) {
 		if (Math.floor((ns.getServerMaxRam('home') - ns.getServerUsedRam('home')) / ns.getScriptRam(`/runners/${file}`)) > 0) {
 			ns.exec(`/runners/${file}`, 'home', Math.floor((ns.getServerMaxRam('home') - ns.getServerUsedRam('home')) / ns.getScriptRam(`/runners/${file}`)), bestHack);
 		}
-		for (let index = 0; index < serverBottom.length; ++index) {
-			if (!ns.fileExists(`/runners/${file}`, serverBottom[index])) {
-				await ns.scp(`/runners/${file}`, "home", serverBottom[index]);
+		for (let i = 0; i < serverBottom.length; ++i) {
+			if (!ns.fileExists(`/runners/${file}`, serverBottom[i])) {
+				await ns.scp(`/runners/${file}`, "home", serverBottom[i]);
 			}
-			if (Math.floor((ns.getServerMaxRam(serverBottom[index]) - ns.getServerUsedRam(serverBottom[index])) / ns.getScriptRam(`/runners/${file}`)) > 0) {
-				ns.exec(`/runners/${file}`, serverBottom[index], Math.floor((ns.getServerMaxRam(serverBottom[index]) - ns.getServerUsedRam(serverBottom[index])) / ns.getScriptRam(`/runners/${file}`)), bestHack);
+			if (Math.floor((ns.getServerMaxRam(serverBottom[i]) - ns.getServerUsedRam(serverBottom[i])) / ns.getScriptRam(`/runners/${file}`)) > 0) {
+				ns.exec(`/runners/${file}`, serverBottom[i], Math.floor((ns.getServerMaxRam(serverBottom[i]) - ns.getServerUsedRam(serverBottom[i])) / ns.getScriptRam(`/runners/${file}`)), bestHack);
 			}
 		}
 		while (ns.getRunningScript(file)) {
@@ -40,18 +40,18 @@ export async function main(ns) {
 		}
 	}
 	async function getBestServer() {
-		for (let index = 0; index < serverBottom.length; ++index) {
-			if ((ns.hasRootAccess(serverBottom[index]) == true) && (ns.getServerRequiredHackingLevel(serverBottom[index]) <= ns.getHackingLevel())) {
-				if (ns.getServerMoneyAvailable(serverBottom[index]) > bestHackMoney) {
-					bestHackMoney = ns.getServerMoneyAvailable(serverBottom[index]);
-					bestHack = serverBottom[index];
+		for (let i = 0; i < serverBottom.length; ++i) {
+			if ((ns.hasRootAccess(serverBottom[i]) == true) && (ns.getServerRequiredHackingLevel(serverBottom[i]) <= ns.getHackingLevel())) {
+				if (ns.getServerMoneyAvailable(serverBottom[i]) > bestHackMoney) {
+					bestHackMoney = ns.getServerMoneyAvailable(serverBottom[i]);
+					bestHack = serverBottom[i];
 				}
 			}
 		}
 		if (bestHackMoney == 0) {
-			for (let index = 0; index < serverBottom.length; ++index) {
-				if ((Math.floor((ns.getServerMaxRam(serverBottom[index]) - ns.getServerUsedRam(serverBottom[index])) / ns.getScriptRam('/runners/grow.js')) > 0) && (!ns.getPurchasedServers().includes(serverBottom[index]))) {
-					ns.exec('/runners/grow.js', serverBottom[index], Math.floor((ns.getServerMaxRam(serverBottom[index]) - ns.getServerUsedRam(serverBottom[index])) / ns.getScriptRam('/runners/grow.js')), serverBottom[index]);
+			for (let i = 0; i < serverBottom.length; ++i) {
+				if ((Math.floor((ns.getServerMaxRam(serverBottom[i]) - ns.getServerUsedRam(serverBottom[i])) / ns.getScriptRam('/runners/grow.js')) > 0) && (!ns.getPurchasedServers().includes(serverBottom[i]))) {
+					ns.exec('/runners/grow.js', serverBottom[i], Math.floor((ns.getServerMaxRam(serverBottom[i]) - ns.getServerUsedRam(serverBottom[i])) / ns.getScriptRam('/runners/grow.js')), serverBottom[i]);
 				}
 			}
 			while (ns.getRunningScript('grow.js')) {

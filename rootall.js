@@ -33,8 +33,8 @@
                 ns.sqlinject(serverBottom[i])
                 ++portsOpen
             }
-            if((ns.getServerNumPortsRequired(server[i] > portsOpen)) && (ns.getHackingLevel() >= ns.getServerRequiredHackingLevel(serverBottom[i]))) {
-                ns.nuke(server[i])
+            if((ns.getServerNumPortsRequired(serverBottom[i]) > portsOpen) && (ns.getHackingLevel() >= ns.getServerRequiredHackingLevel(serverBottom[i]))) {
+                ns.nuke(serverBottom[i])
             }
         }
     }

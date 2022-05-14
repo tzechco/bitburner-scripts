@@ -10,7 +10,7 @@ export async function main(ns) {
             let autoUpdate = await ns.prompt('Would you like enable auto updates?');
             await ns.write('launchOptions.txt', `{"autoUpdate":${autoUpdate}}`, 'w');
         }
-        ns.tprint('Update Complete!');
+        return ns.tprint('Update Complete!');
     }
     else if (ns.args[0]) {
         await ns.wget(`https://raw.githubusercontent.com/tzechco/bitburner-scripts/main/${ns.args[0]}`, ns.args[0]);

@@ -1,4 +1,4 @@
-** @param {NS} ns */
+/** @param {NS} ns */
 export async function main(ns) {
     let scanned = []
     let serverTop = ns.scan("home")
